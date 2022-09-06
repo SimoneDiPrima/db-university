@@ -21,14 +21,16 @@ WHERE YEAR(`date-of-birth`) > '1992';
 -- seconda soluzione
 SELECT *
 FROM `students` 
-WHERE `date-of-birth` > '1992-09-05'; 
+WHERE `date-of-birth` > '1992-09-06'; 
 
 
 
 -- 4. Selezionare tutti i corsi del primo semestre del primo anno di un qualsiasi corso di
 -- laurea (286)
 
-
+SELECT * FROM `courses` 
+WHERE `year` = '1'
+AND `period` = 'I semestre';
 
 
 -- 5. Selezionare tutti gli appelli d'esame che avvengono nel pomeriggio (dopo le 14) del
