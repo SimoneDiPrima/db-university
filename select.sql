@@ -13,6 +13,15 @@ WHERE `cfu` > 10 ;
 
 -- 3. Selezionare tutti gli studenti che hanno più di 30 anni
 
+-- prima soluzione
+SELECT *
+FROM `students` 
+WHERE YEAR(`date-of-birth`) > '1992'; 
+
+-- seconda soluzione
+SELECT *
+FROM `students` 
+WHERE `date-of-birth` > '1992-09-05'; 
 
 
 
