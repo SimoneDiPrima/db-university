@@ -29,29 +29,33 @@ WHERE `teachers`.`id` = 44;
 
 -- -- 4. Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui sono iscritti e il
 -- -- relativo dipartimento, in ordine alfabetico per cognome e nome
--- -- 5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
-SELECT `teachers`.`name`,
-`teachers`.`surname`,
-`course_teacher`.`course_id`,
-`courses`.`name`
-FROM `teachers`
-JOIN `course_teacher`
-ON `teachers`.`id` = `course_teacher`.`teacher_id`
-JOIN `courses`
-ON `courses`.`id`= `course_teacher`.`teacher_id`
-WHERE `teachers`.`id` = 44;
--- -- 6. Selezionare tutti i docenti che insegnano nel Dipartimento di Matematica (54)
-SELECT DISTINCT(`departments`.`name`) as "Departments",
-`degrees`.`name` as "Degrees' course",
-`course_teacher`.*,
-`teachers`.`name`,`teachers`.`surname`
+SELECT DISTINCT `departments`.`name`,`degrees`.*,
+`students`.`name`,`students`.`surname`
 FROM `departments`
 JOIN `degrees`
 ON `departments`.`id` = `degrees`.`department_id`
+JOIN `students`
+ON `degrees`.`department_id` = `students`.`degree_id`
+ORDER BY `students`.`surname`,`students`.`name` asc;
+
+
+
+-- -- 5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
+
+-- -- 6. Selezionare tutti i docenti che insegnano nel Dipartimento di Matematica (54)
+SELECT DISTINCT `teachers`.`name`,
+`teachers`.`surname`,
+`teachers`.`id`,
+`course_teacher`.*
+FROM `teachers`
 JOIN `course_teacher`
-ON `degrees`.`department_id` = `course_teacher`.`course_id`
-JOIN `teachers`
-ON `course_teacher`.`course_id` = `teachers`.`id`
-WHERE `departments`.`name` = 'Dipartimento di Matematica';
+ON `teachers`.`id`= `course_teacher`.`teacher_id`
+JOIN `courses`
+ON `course_teacher`.`course_id` = `courses`.`id`
+JOIN `degrees`
+ON `courses`.`degree_id` =  `degrees`.`department_id`
+JOIN `departments`
+ON  `degrees`.`department_id` = `departments`.`id`
+WHERE `departments`.`name`= 'Dipartimento di Matematica';
 
 -- -- 7. BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per
